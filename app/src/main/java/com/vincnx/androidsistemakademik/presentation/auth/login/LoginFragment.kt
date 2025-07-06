@@ -14,24 +14,31 @@ import com.google.firebase.database.ValueEventListener
 import com.vincnx.androidsistemakademik.MyApplication
 import com.vincnx.androidsistemakademik.R
 import com.vincnx.androidsistemakademik.data.source.db.DatabaseClient
+import com.vincnx.androidsistemakademik.data.source.local.SessionManager
 
 class LoginFragment : Fragment() {
     private lateinit var dbClient: DatabaseClient
-    private val inputEmail by lazy {view?.findViewById<EditText>(R.id.et_email)}
-    private val inputPassword by lazy {view?.findViewById<EditText>(R.id.et_password)}
-    private val btnLogin by lazy {view?.findViewById<View>(R.id.btn_login)}
+    private lateinit var sessionManager: SessionManager
+    private val inputEmail by lazy { view?.findViewById<EditText>(R.id.et_email) }
+    private val inputPassword by lazy { view?.findViewById<EditText>(R.id.et_password) }
+    private val btnLogin by lazy { view?.findViewById<View>(R.id.btn_login) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val appContainer = (requireActivity().application as MyApplication).appContainer
+        dbClient = appContainer.database
+        sessionManager = appContainer.sessionManager
 
-        dbClient = (requireActivity().application as MyApplication).appContainer.database
+        // Check if user is already logged in
+        if (sessionManager.isLoggedIn()) {
+            navigateBasedOnRole(sessionManager.getUserDetails()[SessionManager.KEY_ROLE])
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login_auth, container, false)
     }
 
@@ -57,24 +64,21 @@ class LoginFragment : Fragment() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        // User found with matching email
                         for (userSnapshot in snapshot.children) {
                             val dbPassword = userSnapshot.child("password").getValue(String::class.java)
                             if (dbPassword == password) {
-                                // Password matches
+                                val role = userSnapshot.child("role").getValue(String::class.java)
+                                // Get the user ID (which is the key/node name in Firebase)
+                                val userId = userSnapshot.key
+                                // Save session with user ID
+                                sessionManager.createLoginSession(email, role ?: "", userId ?: "")
                                 Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                                val role = userSnapshot.child("role").getValue()
-                                if (role === "student") {
-//                                    navigate to student home
-                                }
-//                                findNavController().navigate(R.id.action_loginFragment_to_courseFragment)
+                                navigateBasedOnRole(role)
                                 return
                             }
                         }
-                        // Password doesn't match
                         Toast.makeText(context, "Invalid password", Toast.LENGTH_SHORT).show()
                     } else {
-                        // No user found with this email
                         Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
                     }
                     btnLogin?.isEnabled = true
@@ -87,4 +91,11 @@ class LoginFragment : Fragment() {
             })
     }
 
+    private fun navigateBasedOnRole(role: String?) {
+        when (role) {
+            "student" -> findNavController().navigate(R.id.action_loginFragment_to_courseFragment)
+            // Add other role navigation cases here
+            else -> Toast.makeText(context, "Unknown role: $role", Toast.LENGTH_SHORT).show()
+        }
+    }
 }

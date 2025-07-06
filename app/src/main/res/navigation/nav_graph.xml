@@ -7,12 +7,16 @@
 
     <fragment
         android:id="@+id/courseFragment"
-        android:name="com.vincnx.androidsistemakademik.presentation.student.CourseFragment"
+        android:name="com.vincnx.androidsistemakademik.presentation.student.course.CourseFragment"
         android:label="fragment_course_student"
         tools:layout="@layout/fragment_course_student" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.vincnx.androidsistemakademik.presentation.auth.login.LoginFragment"
         android:label="fragment_login_auth"
-        tools:layout="@layout/fragment_login_auth" />
+        tools:layout="@layout/fragment_login_auth" >
+        <action
+            android:id="@+id/action_loginFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+    </fragment>
 </navigation>
