@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "66177966460",
+    "firebase_url": "https://mobiles-b7cf8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mobiles-b7cf8",
+    "storage_bucket": "mobiles-b7cf8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66177966460:android:339e97fa714c0d26ed44f9",
+        "android_client_info": {
+          "package_name": "com.vincnx.androidsistemakademik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYVhFdw_J8CH-k7DtDyuOXj8tcAzkmQpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
