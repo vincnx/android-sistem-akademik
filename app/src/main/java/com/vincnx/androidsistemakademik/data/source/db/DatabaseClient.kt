@@ -5,7 +5,7 @@ import com.google.firebase.database.FirebaseDatabase
 object DatabaseClient {
     val database: FirebaseDatabase by lazy {
         val instance = FirebaseDatabase.getInstance()
-        instance.setPersistenceEnabled(true)
+        instance.setPersistenceEnabled(false)
         instance
     }
 

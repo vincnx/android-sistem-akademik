@@ -18,6 +18,7 @@ import com.vincnx.androidsistemakademik.data.source.local.SessionManager
 import com.vincnx.androidsistemakademik.domain.entities.Course
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.vincnx.androidsistemakademik.data.repository.CourseRepo
 import com.vincnx.androidsistemakademik.data.repository.EnrollmentRepo
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class CourseFragment : Fragment() {
     private lateinit var sessionManager: SessionManager
     private lateinit var enrollmentRepo: EnrollmentRepo
     private lateinit var courseRepo: CourseRepo
+    private val btnEnroll by lazy { view?.findViewById<View>(R.id.btn_enroll) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +58,15 @@ class CourseFragment : Fragment() {
             rvCourses = it.findViewById(R.id.rv_courses)
             setupRecyclerView()
             val userId = fetchUserSession()
+            if (userId == null) {
+                findNavController().navigate(R.id.action_courseFragment_to_loginFragment)
+                return
+            }
             fetchEnrolledCourse(userId)
+
+            btnEnroll?.setOnClickListener {
+                findNavController().navigate(R.id.action_courseFragment_to_studentEnrollFragment)
+            }
         }
     }
 
@@ -68,12 +78,8 @@ class CourseFragment : Fragment() {
         }
     }
 
-    private fun fetchUserSession(): String {
+    private fun fetchUserSession(): String? {
         val userId = sessionManager.getUserDetails()[SessionManager.KEY_USER_ID]
-        if (userId == null) {
-            Toast.makeText(context, "User session not found", Toast.LENGTH_SHORT).show()
-            return ""
-        }
 
         return userId
     }

@@ -31,4 +31,16 @@ class EnrollmentRepo(val db: FirebaseDatabase) {
 
         enrollments
     }
+
+    suspend fun createEnrollment(courseId: String, studentId: String): Result<Unit> = runCatching {
+        val enrollment = hashMapOf(
+            "course_id" to courseId,
+            "student_id" to studentId
+        )
+
+        db.getReference(documentName)
+            .push() // This creates a new unique key for the enrollment
+            .setValue(enrollment)
+            .await()
+    }
 }

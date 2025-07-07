@@ -9,7 +9,14 @@
         android:id="@+id/courseFragment"
         android:name="com.vincnx.androidsistemakademik.presentation.student.course.CourseFragment"
         android:label="fragment_course_student"
-        tools:layout="@layout/fragment_course_student" />
+        tools:layout="@layout/fragment_course_student" >
+        <action
+            android:id="@+id/action_courseFragment_to_studentEnrollFragment"
+            app:destination="@id/studentEnrollFragment" />
+        <action
+            android:id="@+id/action_courseFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.vincnx.androidsistemakademik.presentation.auth.login.LoginFragment"
@@ -17,6 +24,15 @@
         tools:layout="@layout/fragment_login_auth" >
         <action
             android:id="@+id/action_loginFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentEnrollFragment"
+        android:name="com.vincnx.androidsistemakademik.presentation.student.enroll.StudentEnrollFragment"
+        android:label="fragment_student_enroll"
+        tools:layout="@layout/fragment_student_enroll" >
+        <action
+            android:id="@+id/action_studentEnrollFragment_to_courseFragment"
             app:destination="@id/courseFragment" />
     </fragment>
 </navigation>

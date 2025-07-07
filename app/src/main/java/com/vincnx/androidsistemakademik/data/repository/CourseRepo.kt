@@ -25,4 +25,27 @@ class CourseRepo(val db: FirebaseDatabase) {
 
         courses
     }
+
+    suspend fun listCourses(): Result<List<Course>> = runCatching {
+        val courses = mutableListOf<Course>()
+
+        val snapshot = db.getReference(documentName)
+            .get()
+            .await()
+
+        if (snapshot.exists()) {
+            for (courseSnapshot in snapshot.children) {
+                val course = courseSnapshot.getValue(Course::class.java)
+                if (course != null) {
+                    courses.add(Course(
+                        id = courseSnapshot.key ?: "",
+                        name = course.name
+                    ))
+                }
+            }
+        }
+
+        courses
+    }
+
 }

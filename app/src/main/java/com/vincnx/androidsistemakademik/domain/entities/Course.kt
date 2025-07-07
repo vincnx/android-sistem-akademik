@@ -1,5 +1,6 @@
 package com.vincnx.androidsistemakademik.domain.entities
 
 data class Course(
-    val name: String = "",
+    val id: String = "",
+    val name: String = ""
 );

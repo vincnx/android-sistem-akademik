@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.vincnx.androidsistemakademik" />
-                  <option name="mobileSdkAppId" value="1:66177966460:android:339e97fa714c0d26ed44f9" />
-                  <option name="projectId" value="mobiles-b7cf8" />
-                  <option name="projectNumber" value="66177966460" />
+                  <option name="mobileSdkAppId" value="1:57331051322:android:e942bcb6db87ffa9bf7e03" />
+                  <option name="projectId" value="android-akademik" />
+                  <option name="projectNumber" value="57331051322" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
