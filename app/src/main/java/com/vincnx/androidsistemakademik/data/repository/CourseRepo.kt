@@ -17,8 +17,13 @@ class CourseRepo(val db: FirebaseDatabase) {
                 .await()
 
             if (snapshot.exists()) {
-                snapshot.getValue(Course::class.java)?.let { course ->
-                    courses.add(course)
+                val course = snapshot.getValue(Course::class.java)
+                if (course != null) {
+                    courses.add(Course(
+                        id = courseId,  // Use the courseId from the parameter
+                        name = course.name,
+                        lecturer_id = course.lecturer_id
+                    ))
                 }
             }
         }

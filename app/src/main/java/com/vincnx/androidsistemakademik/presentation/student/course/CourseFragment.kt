@@ -91,24 +91,28 @@ class CourseFragment : Fragment() {
                     if (enrollments.isEmpty()) {
                         Toast.makeText(context, "No enrolled courses found", Toast.LENGTH_SHORT).show()
                     } else {
+                        // First get the course IDs from enrollments
                         val courseIds = enrollments.map { it.course_id }
-                        fetchCourseDetails(courseIds)
+                        // Fetch courses and combine with enrollments
+                        courseRepo.getCourses(courseIds)
+                            .onSuccess { courses ->
+                                // Create a map of courseId to Course for easy lookup
+                                val courseMap = courses.associateBy { it.id }
+                                // Create new Enrollment instances with the course data
+                                val enrollmentsWithCourses = enrollments.map { enrollment ->
+                                    enrollment.copy(
+                                        course = courseMap[enrollment.course_id]
+                                    )
+                                }
+                                courseAdapter.submitList(enrollmentsWithCourses)
+                            }
+                            .onFailure { error ->
+                                Log.e("CourseFragment", "Error loading courses: ${error.message}", error)
+                            }
                     }
                 }
                 .onFailure { error ->
                     Log.e("CourseFragment", "Error loading enrollments: ${error.message}", error)
-                }
-        }
-    }
-
-    private fun fetchCourseDetails(courseIds: List<String>) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            courseRepo.getCourses(courseIds)
-                .onSuccess { courses ->
-                    courseAdapter.submitList(courses)
-                }
-                .onFailure { error ->
-                    Log.e("CourseFragment", "Error loading courses: ${error.message}", error)
                 }
         }
     }

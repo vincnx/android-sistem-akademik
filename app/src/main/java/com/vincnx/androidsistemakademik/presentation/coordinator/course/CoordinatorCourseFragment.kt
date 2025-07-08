@@ -29,7 +29,7 @@ import kotlinx.coroutines.tasks.await
 
 class CoordinatorCourseFragment : Fragment() {
     private lateinit var rvCourses: RecyclerView
-    private lateinit var courseAdapter: CourseAdapter
+    private lateinit var courseAdapter: CoordinatorCourseAdapter
     private lateinit var dbClient: DatabaseClient
     private lateinit var sessionManager: SessionManager
     private lateinit var enrollmentRepo: EnrollmentRepo
@@ -73,7 +73,7 @@ class CoordinatorCourseFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        courseAdapter = CourseAdapter()
+        courseAdapter = CoordinatorCourseAdapter()
         rvCourses.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = courseAdapter

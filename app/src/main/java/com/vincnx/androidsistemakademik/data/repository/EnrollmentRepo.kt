@@ -22,12 +22,21 @@ class EnrollmentRepo(val db: FirebaseDatabase) {
         }
 
         val enrollments = mutableListOf<Enrollment>()
-        for (enrollment in snapshot.children) {
-            val courseId = enrollment.child("course_id").getValue(String::class.java)
-            val studentId = enrollment.child("student_id").getValue(String::class.java)
+        for (enrollmentSnapshot in snapshot.children) {
+            val courseId = enrollmentSnapshot.child("course_id").getValue(String::class.java)
+            val studentId = enrollmentSnapshot.child("student_id").getValue(String::class.java)
+            val grade = enrollmentSnapshot.child("grade").getValue(String::class.java)
 
             if (courseId != null && studentId != null) {
-enrollments.add(Enrollment(course_id = courseId, student_id = studentId, course = null, student = null, grade = ""))
+                enrollments.add(
+                    Enrollment(
+                        course_id = courseId,
+                        student_id = studentId,
+                        course = null,  // Will be populated later in the fragment
+                        student = null,
+                        grade = grade  // This can be null if grade is not set
+                    )
+                )
             }
         }
 
