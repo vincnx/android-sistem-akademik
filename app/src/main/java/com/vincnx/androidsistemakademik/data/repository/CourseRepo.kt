@@ -74,4 +74,14 @@ class CourseRepo(val db: FirebaseDatabase) {
         courses
     }
 
+    suspend fun createCourse(name: String, lecturerId: String): Result<String> = runCatching {
+        val courseRef = db.getReference(documentName).push()
+        val course = Course(
+            id = courseRef.key ?: "",
+            name = name,
+            lecturer_id = lecturerId
+        )
+        courseRef.setValue(course).await()
+        courseRef.key ?: throw Exception("Failed to create course")
+    }
 }

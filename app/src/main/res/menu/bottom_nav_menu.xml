@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- For student -->
+    <item
+        android:id="@+id/courseFragment"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Courses"
+        android:visible="false"/>
+    <!-- For lecturer -->
+    <item
+        android:id="@+id/lecturerEnrollFragment"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Enrollments"
+        android:visible="false"/>
+    <!-- For coordinator -->
+    <item
+        android:id="@+id/coordinatorCourseFragment"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Manage Courses"
+        android:visible="false"/>
+    <!-- Profile for all users -->
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Profile" />
+</menu> 

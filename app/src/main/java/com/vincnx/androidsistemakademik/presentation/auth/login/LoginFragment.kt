@@ -95,6 +95,7 @@ class LoginFragment : Fragment() {
         when (role) {
             "student" -> findNavController().navigate(R.id.action_loginFragment_to_courseFragment)
             "lecturer" -> findNavController().navigate(R.id.action_loginFragment_to_lecturerEnrollFragment)
+            "coordinator" -> findNavController().navigate(R.id.action_loginFragment_to_coordinatorCourseFragment)
             // Add other role navigation cases here
             else -> Toast.makeText(context, "Unknown role: $role", Toast.LENGTH_SHORT).show()
         }
