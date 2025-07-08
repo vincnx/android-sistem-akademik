@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_loginFragment_to_courseFragment"
             app:destination="@id/courseFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_lecturerEnrollFragment"
+            app:destination="@id/lecturerEnrollFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentEnrollFragment"
@@ -35,4 +38,9 @@
             android:id="@+id/action_studentEnrollFragment_to_courseFragment"
             app:destination="@id/courseFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/lecturerEnrollFragment"
+        android:name="com.vincnx.androidsistemakademik.presentation.lecturer.enrollment.LecturerEnrollFragment"
+        android:label="fragment_lecturer_enroll"
+        tools:layout="@layout/fragment_lecturer_enroll" />
 </navigation>

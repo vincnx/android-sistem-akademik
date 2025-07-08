@@ -39,7 +39,33 @@ class CourseRepo(val db: FirebaseDatabase) {
                 if (course != null) {
                     courses.add(Course(
                         id = courseSnapshot.key ?: "",
-                        name = course.name
+                        name = course.name,
+                        lecturer_id = course.lecturer_id
+                    ))
+                }
+            }
+        }
+
+        courses
+    }
+
+    suspend fun getCoursesByLecturerId(lecturerId: String): Result<List<Course>> = runCatching {
+        val courses = mutableListOf<Course>()
+
+        val snapshot = db.getReference(documentName)
+            .orderByChild("lecturer_id")
+            .equalTo(lecturerId)
+            .get()
+            .await()
+
+        if (snapshot.exists()) {
+            for (courseSnapshot in snapshot.children) {
+                val course = courseSnapshot.getValue(Course::class.java)
+                if (course != null) {
+                    courses.add(Course(
+                        id = courseSnapshot.key ?: "",
+                        name = course.name,
+                        lecturer_id = course.lecturer_id
                     ))
                 }
             }
