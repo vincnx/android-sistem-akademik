@@ -8,6 +8,4 @@ object DatabaseClient {
         instance.setPersistenceEnabled(false)
         instance
     }
-
-    fun getCoursesReference() = database.getReference("courses")
 }

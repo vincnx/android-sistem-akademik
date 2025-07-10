@@ -94,13 +94,10 @@ class LecturerEnrollFragment : Fragment() {
     private fun fetchEnrolledCourse(lecturerId: String) {
         lifecycleScope.launch {
             try {
-                // First get all courses taught by this lecturer
                 val coursesResult = courseRepo.getCoursesByLecturerId(lecturerId)
                 val courses = coursesResult.getOrThrow()
 
                 val allEnrollments = mutableListOf<Enrollment>()
-
-                // For each course, get its enrollments
                 for (course in courses) {
                     val enrollmentsResult = enrollmentRepo.getEnrollmentsByCourseId(course.id)
                     val enrollments = enrollmentsResult.getOrThrow()
@@ -108,12 +105,9 @@ class LecturerEnrollFragment : Fragment() {
                     allEnrollments.addAll(enrollments)
                 }
 
-                // Update the adapter
                 enrollmentAdapter.submitList(allEnrollments)
             } catch (e: Exception) {
-                // Handle error - you might want to show an error message to the user
                 Log.e("LecturerEnrollFragment", "Error fetching enrollments", e)
-                // TODO: Show error message to user
             }
         }
     }
@@ -140,7 +134,6 @@ class LecturerEnrollFragment : Fragment() {
             try {
                 enrollmentRepo.updateGrade(enrollment.course_id, enrollment.student_id, newGrade)
                     .onSuccess {
-                        // Get current lecturer ID and refresh the data
                         val lecturerId = fetchUserSession()
                         if (lecturerId != null) {
                             fetchEnrolledCourse(lecturerId)

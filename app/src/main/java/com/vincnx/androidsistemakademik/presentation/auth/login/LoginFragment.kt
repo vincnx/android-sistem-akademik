@@ -68,9 +68,7 @@ class LoginFragment : Fragment() {
                             val dbPassword = userSnapshot.child("password").getValue(String::class.java)
                             if (dbPassword == password) {
                                 val role = userSnapshot.child("role").getValue(String::class.java)
-                                // Get the user ID (which is the key/node name in Firebase)
                                 val userId = userSnapshot.key
-                                // Save session with user ID
                                 sessionManager.createLoginSession(email, role ?: "", userId ?: "")
                                 Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
                                 navigateBasedOnRole(role)
@@ -85,7 +83,6 @@ class LoginFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                     btnLogin?.isEnabled = true
                 }
             })
@@ -96,8 +93,6 @@ class LoginFragment : Fragment() {
             "student" -> findNavController().navigate(R.id.action_loginFragment_to_courseFragment)
             "lecturer" -> findNavController().navigate(R.id.action_loginFragment_to_lecturerEnrollFragment)
             "coordinator" -> findNavController().navigate(R.id.action_loginFragment_to_coordinatorCourseFragment)
-            // Add other role navigation cases here
-            else -> Toast.makeText(context, "Unknown role: $role", Toast.LENGTH_SHORT).show()
         }
     }
 }

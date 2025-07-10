@@ -72,14 +72,11 @@ class StudentEnrollFragment : Fragment() {
                 return@launch
             }
 
-            // First get enrollments
             enrollmentRepo.getEnrollments(userId)
                 .onSuccess { enrollments ->
-                    // Store enrolled course IDs
                     enrolledCourseIds.clear()
                     enrolledCourseIds.addAll(enrollments.map { it.course_id })
-                    
-                    // Then load courses
+
                     loadUnenrolledCourses()
                 }
                 .onFailure { exception ->
@@ -92,7 +89,6 @@ class StudentEnrollFragment : Fragment() {
         lifecycleScope.launch {
             courseRepo.listCourses()
                 .onSuccess { allCourses ->
-                    // Filter out enrolled courses
                     val unenrolledCourses = allCourses.filter { course -> 
                         course.id !in enrolledCourseIds 
                     }
@@ -118,7 +114,7 @@ class StudentEnrollFragment : Fragment() {
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
-            courses.map { it.name } // Assuming Course has a 'name' property
+            courses.map { it.name }
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -127,11 +123,9 @@ class StudentEnrollFragment : Fragment() {
         spinnerCourse.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                 val selectedCourse = courses[pos]
-                // Handle the selected course
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                // Handle nothing selected
             }
         }
     }
@@ -148,7 +142,6 @@ class StudentEnrollFragment : Fragment() {
                 enrollmentRepo.createEnrollment(courseId, userId)
                     .onSuccess {
                         Toast.makeText(requireContext(), "Successfully enrolled in course", Toast.LENGTH_SHORT).show()
-                        // Optionally navigate back or refresh
                     }
                     .onFailure { exception ->
                         Toast.makeText(requireContext(), "Failed to enroll: ${exception.message}", Toast.LENGTH_SHORT).show()

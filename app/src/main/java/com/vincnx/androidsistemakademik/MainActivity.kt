@@ -17,24 +17,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
-        // Initialize SessionManager
+
         sessionManager = (application as MyApplication).appContainer.sessionManager
-        
-        // Get the NavHostFragment
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        // Get the NavController
         val navController = navHostFragment.navController
-        
-        // Set up Bottom Navigation
+
         bottomNav = findViewById(R.id.bottom_nav)
         bottomNav.setupWithNavController(navController)
-        
-        // Set up navigation visibility
+
         setupNavigationVisibility(navController)
-        
-        // Update menu items based on user role
         updateMenuItemsVisibility()
     }
 
@@ -44,7 +37,6 @@ class MainActivity : AppCompatActivity() {
                 bottomNav.visibility = View.GONE
             } else {
                 bottomNav.visibility = View.VISIBLE
-                // Update menu items visibility when navigation changes (except for login)
                 updateMenuItemsVisibility()
             }
         }
@@ -54,12 +46,10 @@ class MainActivity : AppCompatActivity() {
         val menu = bottomNav.menu
         val userRole = sessionManager.getUserDetails()[SessionManager.KEY_ROLE]
 
-        // Hide all role-specific items first
         menu.findItem(R.id.courseFragment)?.isVisible = false
         menu.findItem(R.id.lecturerEnrollFragment)?.isVisible = false
         menu.findItem(R.id.coordinatorCourseFragment)?.isVisible = false
 
-        // Show items based on role
         when (userRole) {
             "student" -> {
                 menu.findItem(R.id.courseFragment)?.isVisible = true
@@ -72,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Profile is visible for all authenticated users
         menu.findItem(R.id.navigation_profile)?.isVisible = sessionManager.isLoggedIn()
     }
 }

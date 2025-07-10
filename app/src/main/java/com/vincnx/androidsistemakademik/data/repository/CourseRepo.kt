@@ -20,7 +20,7 @@ class CourseRepo(val db: FirebaseDatabase) {
                 val course = snapshot.getValue(Course::class.java)
                 if (course != null) {
                     courses.add(Course(
-                        id = courseId,  // Use the courseId from the parameter
+                        id = courseId,
                         name = course.name,
                         lecturer_id = course.lecturer_id
                     ))

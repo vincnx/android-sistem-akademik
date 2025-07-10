@@ -99,7 +99,6 @@ class CoordinatorCourseFragment : Fragment() {
         val courseNameInput = dialogView.findViewById<EditText>(R.id.et_course_name)
         val lecturerSpinner = dialogView.findViewById<Spinner>(R.id.spinner_lecturer)
 
-        // Fetch lecturers and populate spinner
         viewLifecycleOwner.lifecycleScope.launch {
             fetchLecturers { users ->
                 lecturers = users.toMutableList()
@@ -137,7 +136,7 @@ class CoordinatorCourseFragment : Fragment() {
                     courseRepo.createCourse(courseName, selectedLecturer.id)
                         .onSuccess {
                             Toast.makeText(context, "Course added successfully", Toast.LENGTH_SHORT).show()
-                            fetchCourses() // Refresh the course list
+                            fetchCourses()
                         }
                         .onFailure { error ->
                             Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
