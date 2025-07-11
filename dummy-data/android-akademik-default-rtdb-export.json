@@ -1,0 +1,50 @@
+{
+  "app_title": "Sistem Akademik uksw",
+  "courses": {
+    "0": {
+      "lecturer_id": "0",
+      "name": "asd"
+    },
+    "1": {
+      "name": "matdis"
+    },
+    "-OUdL_oQadqyE5wp8X6l": {
+      "id": "-OUdL_oQadqyE5wp8X6l",
+      "lecturer_id": "1",
+      "name": "pemrograman"
+    }
+  },
+  "enrollments": {
+    "-OU_7vpicioYz1n35hMS": {
+      "course_id": "0",
+      "grade": "A",
+      "student_id": "0"
+    },
+    "-OU_EF-fjhSVpEjmkxhC": {
+      "course_id": "-OUdL_oQadqyE5wp8X6l",
+      "grade": "B",
+      "student_id": "0"
+    }
+  },
+  "users": [
+    {
+      "email": "672022070@student.uksw.edu",
+      "name": "vincent",
+      "password": "password",
+      "role": "student"
+    },
+    {
+      "email": "672022000@student.uksw.edu",
+      "name": "teacher",
+      "password": "password",
+      "role": "lecturer"
+    },
+    null,
+    {
+      "email": "coordinator@gmail.com",
+      "name": "coordinator",
+      "password": "password",
+      "role": "coordinator"
+    }
+  ]
+}
